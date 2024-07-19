@@ -8,8 +8,6 @@ public class Rune : MonoBehaviour
     public string runeName;
     public _GameManager Manager;
 
-    private void OnEnable() { }
-
     void Start()
     {
         Manager = GameObject.Find("Manager").GetComponent<_GameManager>();
@@ -23,6 +21,4 @@ public class Rune : MonoBehaviour
         Manager.currentRuneNames.RemoveAt(index);
         Manager.currentRuneSprites.RemoveAt(index);
     }
-
-    void FixedUpdate() { }
 }

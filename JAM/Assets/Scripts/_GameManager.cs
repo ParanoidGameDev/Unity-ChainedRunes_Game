@@ -29,10 +29,12 @@ public class _GameManager : MonoBehaviour
     public List<string> currentRuneNames;
     public List<Sprite> currentRuneSprites;
 
+    public List<int> currentEnemyKillingRunes;
+
     // Start is called before the first frame update
     public int GetRandomRune()
     {
-        return Random.Range(0, currentRuneNames.Count - 1);
+        return Random.Range(0, currentRuneNames.Count);
     }
 
     // Update is called once per frame

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3144155793031447463}
   - component: {fileID: 4547931011430635910}
   m_Layer: 0
-  m_Name: rune
+  m_Name: runeB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -258,6 +258,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1351375522}
+  - {fileID: 692130393}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
@@ -354,7 +355,7 @@ GameObject:
   - component: {fileID: 621302182}
   - component: {fileID: 621302181}
   m_Layer: 0
-  m_Name: EventSystem
+  m_Name: _EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -421,7 +422,7 @@ GameObject:
   - component: {fileID: 692130393}
   - component: {fileID: 692130392}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -451,12 +452,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692130391}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 519420032}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &856313721
 PrefabInstance:
@@ -508,7 +509,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7780123355231030502, guid: 025c9ab549106dc4f9d57e12175c1420, type: 3}
       propertyPath: m_Name
-      value: rune
+      value: Rune
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -574,7 +575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7780123355231030502, guid: 025c9ab549106dc4f9d57e12175c1420, type: 3}
       propertyPath: m_Name
-      value: rune (1)
+      value: Rune
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -703,7 +704,7 @@ GameObject:
   - component: {fileID: 1559537642}
   - component: {fileID: 1559537641}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: Tilemap Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1725,7 +1726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7780123355231030502, guid: 025c9ab549106dc4f9d57e12175c1420, type: 3}
       propertyPath: m_Name
-      value: Square
+      value: Rune
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1743,4 +1744,3 @@ SceneRoots:
   - {fileID: 7658529636759759093}
   - {fileID: 856313721}
   - {fileID: 893269719}
-  - {fileID: 692130393}

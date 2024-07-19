@@ -4,38 +4,46 @@ using UnityEngine;
 
 public class _GameManager : MonoBehaviour
 {
-    public List<GameObject> runes; //16
-    public List<GameObject> newRunes; //6
+    public List<string> RuneNames = new List<string>
+    {
+        "A",
+        "B",
+        "C",
+        "D",
+        "F",
+        "I",
+        "K",
+        "M",
+        "N",
+        "O",
+        "P",
+        "R",
+        "S",
+        "T",
+        "X",
+        "Y",
+        "Z",
+    };
+    public List<Sprite> RuneSprites;
 
-    public List<GameObject> enemies; //3
-
-    public GameObject currentEnemy; //1
+    public List<string> currentRuneNames;
+    public List<Sprite> currentRuneSprites;
 
     // Start is called before the first frame update
-    void Start()
-    {/*
-        //Inicializar enemigo
-        //currentEnemy = Instantiate(enemies[1]);
-        //Generar las runas del enemigo // 3 - 5
-        //currentEnemy.GetComponent<Enemy>().rune;
-        //Rellenar las que resten
-        //nalkjsdjgñlksjg
-
-        //Aleatorizarlas
-        //newRunes.Randomize
-
-
-            //DEBUG
-        foreach (GameObject enemy in enemies)
-        {
-            Instantiate(enemy);
-
-        }*/
+    public int GetRandomRune()
+    {
+        return Random.Range(0, currentRuneNames.Count - 1);
     }
 
     // Update is called once per frame
-    void Update()
+    void Awake()
     {
-        
+        NewEnemy();
+    }
+
+    public void NewEnemy()
+    {
+        currentRuneNames = RuneNames;
+        currentRuneSprites = RuneSprites;
     }
 }

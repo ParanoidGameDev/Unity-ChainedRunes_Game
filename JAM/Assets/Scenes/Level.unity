@@ -224,25 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88503843c1a2c094688b6984e50905fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RuneNames:
-  - A
-  - B
-  - C
-  - D
-  - F
-  - I
-  - K
-  - M
-  - N
-  - O
-  - P
-  - R
-  - S
-  - T
-  - X
-  - Y
-  - Z
-  RuneSprites:
+  runeSprites:
   - {fileID: 21300000, guid: eadabed29257c0b4cb8fecaf87817ea2, type: 3}
   - {fileID: 21300000, guid: 35df6190bf6813f4d9b16532045619f5, type: 3}
   - {fileID: 21300000, guid: e819fed9c7f5db746ab175910f03a750, type: 3}
@@ -260,9 +242,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1c13ae0197f89874da0e71f6645102ee, type: 3}
   - {fileID: 21300000, guid: f1a5986d77a7e8c4faf0550641dd984f, type: 3}
   - {fileID: 21300000, guid: 2f1c93206a66b0b408d60bf8e28bfc97, type: 3}
-  currentRuneNames: []
-  currentRuneSprites: []
-  currentEnemyKillingRunes: 
+  userRunesIndex: 
+  userRunesSprites: []
+  tempRuneList: []
+  enemyZone: {fileID: 1955042780}
+  enemy: {fileID: 0}
+  enemyPrefab: {fileID: 713323790580467515, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,7 +486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &621302181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,7 +559,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &915193760
 RectTransform:
   m_ObjectHideFlags: 0
@@ -701,7 +686,7 @@ GameObject:
   - component: {fileID: 1233171588}
   - component: {fileID: 1233171587}
   m_Layer: 5
-  m_Name: closeBackground
+  m_Name: pauseBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3138,7 +3123,7 @@ GameObject:
   - component: {fileID: 2103158388}
   - component: {fileID: 2103158387}
   m_Layer: 5
-  m_Name: closeCredits
+  m_Name: pauseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

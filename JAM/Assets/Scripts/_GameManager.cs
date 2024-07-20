@@ -1,12 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class _GameManager : MonoBehaviour
 {
     // ! Runes declarations
-    public readonly List<string> RunesPool =
+    public readonly List<string> runesPool =
         new()
         {
             "A",
@@ -27,17 +25,17 @@ public class _GameManager : MonoBehaviour
             "Y",
             "Z",
         };
-    public List<Sprite> RuneSprites; // This preloads from te Unity inspector
+    public List<Sprite> runeSprites; // This preloads from te Unity inspector
 
     // ! Managing Runes
-    public List<int> UserRunesIndex; // This preloads from RunesPool
-    public List<Sprite> UserRunesSprites; // Mirror variable to set sprite when called from Rune.cs
-    public List<string> TempRuneList; // Temp list to iterate usable runes
+    public List<int> userRunesIndex; // This preloads from RunesPool
+    public List<Sprite> userRunesSprites; // Mirror variable to set sprite when called from Rune.cs
+    public List<string> tempRuneList; // Temp list to iterate usable runes
 
     // ! Enemies
-    public Transform EnemyZone; // This preloads from te Unity inspector
-    public GameObject Enemy; // This will be generated after
-    public GameObject EnemyPrefab; // This preloads from te Unity inspector
+    public Transform enemyZone; // This preloads from te Unity inspector
+    public GameObject enemy; // This will be generated after
+    public GameObject enemyPrefab; // This preloads from te Unity inspector
 
     // Start is called before the first frame update
     // Update is called once per frame
@@ -49,36 +47,36 @@ public class _GameManager : MonoBehaviour
 
     public void CreateNewEnemy()
     {
-        if (Enemy)
-            Destroy(Enemy);
+        if (enemy)
+            Destroy(enemy);
 
         // Create temp list to iterate runes
-        TempRuneList = new List<string>(RunesPool);
+        tempRuneList = new List<string>(runesPool);
 
         // Get 6 random runes checking that are not repeated
         for (int i = 0; i < 6; i++)
         {
-            int randomIndex = Random.Range(0, TempRuneList.Count);
+            int randomIndex = Random.Range(0, tempRuneList.Count);
 
             // Check if this randomIndex is already in the list
-            while (UserRunesIndex.Contains(randomIndex))
+            while (userRunesIndex.Contains(randomIndex))
             {
                 // If it IS in the list, generate another random to try again
-                randomIndex = Random.Range(0, TempRuneList.Count);
+                randomIndex = Random.Range(0, tempRuneList.Count);
             }
 
             // If it is NOT in the list, then add it
-            UserRunesIndex.Add(randomIndex);
+            userRunesIndex.Add(randomIndex);
         }
 
         // Adding Runes sprites to its var
-        foreach (var x in UserRunesIndex)
+        foreach (var x in userRunesIndex)
         {
-            UserRunesSprites.Add(RuneSprites[x]);
+            userRunesSprites.Add(runeSprites[x]);
         }
 
         // Lastly, we preload an Enemy
-        Enemy = Instantiate(EnemyPrefab, EnemyZone.position, Quaternion.identity, EnemyZone);
+        enemy = Instantiate(enemyPrefab, enemyZone.position, Quaternion.identity, enemyZone);
 
         // ^ Debug ========================
         // __CustomGlobalFunctions.DebugList(UserRunesIndex, "Final UserRunesIndex: ", ".");
@@ -86,11 +84,11 @@ public class _GameManager : MonoBehaviour
 
     public int GetRandomRuneIndex()
     {
-        return Random.Range(0, UserRunesIndex.Count);
+        return Random.Range(0, userRunesIndex.Count);
     }
 
     public List<int> GetRunesPoolIndex()
     {
-        return UserRunesIndex;
+        return userRunesIndex;
     }
 }

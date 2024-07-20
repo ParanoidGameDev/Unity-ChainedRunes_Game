@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Rune : MonoBehaviour
@@ -19,16 +16,16 @@ public class Rune : MonoBehaviour
         Manager = GameObject.Find("Manager").GetComponent<_GameManager>();
 
         int randomIndex = Manager.GetRandomRuneIndex();
-        RuneText.text = Manager.UserRunesIndex[randomIndex].ToString();
+        RuneText.text = Manager.userRunesIndex[randomIndex].ToString();
 
         this.gameObject.name = RuneText.text;
-        this.GetComponent<SpriteRenderer>().sprite = Manager.UserRunesSprites[randomIndex];
+        this.GetComponent<SpriteRenderer>().sprite = Manager.userRunesSprites[randomIndex];
 
         // ^ Debug ========================
         // Debug.Log("Rune removed from pool and assigned: " + Manager.UserRunesIndex[randomIndex]);
 
-        Manager.UserRunesIndex.RemoveAt(randomIndex);
-        Manager.UserRunesSprites.RemoveAt(randomIndex);
+        Manager.userRunesIndex.RemoveAt(randomIndex);
+        Manager.userRunesSprites.RemoveAt(randomIndex);
 
         // ^ Debug ========================
         // Debug.Log("Remainign runes in pool: " + Manager.UserRunesIndex.Count);

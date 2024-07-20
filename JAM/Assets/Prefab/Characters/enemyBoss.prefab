@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: enemyBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 5531747486073642793, guid: 2be756191ff91dc4dad4f7e1175a0c00, type: 3}
+      propertyPath: health
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7087368408977990021, guid: 2be756191ff91dc4dad4f7e1175a0c00, type: 3}
       propertyPath: m_Sprite
       value: 

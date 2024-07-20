@@ -8,13 +8,10 @@ public class Enemy : MonoBehaviour
     public List<int> killingRunes;
     public _GameManager Manager;
 
-    void Start()
+    void Awake()
     {
         Manager = GameObject.Find("Manager").GetComponent<_GameManager>();
-        health = 4;
-
-        // Create a list to store the indices of runes that will be used for killing
-        List<int> killingRunes = new List<int>();
+        // health = 4;
 
         // Loop through the health value to determine the runes to be used for killing
         for (int i = 0; i < health; i++)
@@ -23,11 +20,13 @@ public class Enemy : MonoBehaviour
             do
             {
                 // Get a random index within the range of available rune names
-                randomIndex = Random.Range(0, Manager.RuneNames.Count);
+                randomIndex = Random.Range(0, Manager.RunesPool.Count);
             } while (killingRunes.Contains(randomIndex));
 
             // Add the selected random index to the list of killing rune indices
             killingRunes.Add(randomIndex);
         }
+
+        killingRunes.Sort();
     }
 }

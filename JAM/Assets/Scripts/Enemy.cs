@@ -10,23 +10,20 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
-        Manager = GameObject.Find("Manager").GetComponent<_GameManager>();
-        // health = 4;
+        GetKillingRunes();
+    }
 
-        // Loop through the health value to determine the runes to be used for killing
+    public void GetKillingRunes()
+    {
+        Manager = GameObject.Find("Manager").GetComponent<_GameManager>();
+
+        // Loop through the health value to get the runes to be used for killing
         for (int i = 0; i < health; i++)
         {
-            int randomIndex;
-            do
-            {
-                // Get a random index within the range of available rune names
-                randomIndex = Random.Range(0, Manager.RunesPool.Count);
-            } while (killingRunes.Contains(randomIndex));
-
-            // Add the selected random index to the list of killing rune indices
-            killingRunes.Add(randomIndex);
+            killingRunes.Add(Manager.GetRunesPoolIndex()[i]);
         }
 
-        killingRunes.Sort();
+        // ^ Debug ========================
+        __CustomGlobalFunctions.DebugList(killingRunes, "Total killingRunes: ", "No killingRunes.");
     }
 }

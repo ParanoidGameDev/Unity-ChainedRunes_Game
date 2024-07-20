@@ -11,15 +11,35 @@ public class Rune : MonoBehaviour
 
     void Start()
     {
+        GetRune();
+    }
+
+    public void GetRune()
+    {
         Manager = GameObject.Find("Manager").GetComponent<_GameManager>();
 
-        int index = Manager.GetRandomRuneIndex();
-        RuneText.text = Manager.userRunes[index].ToString();
+        int randomIndex = Manager.GetRandomRuneIndex();
+        RuneText.text = Manager.UserRunesIndex[randomIndex].ToString();
 
         this.gameObject.name = RuneText.text;
-        this.GetComponent<SpriteRenderer>().sprite = Manager.currentRuneSprites[index];
+        this.GetComponent<SpriteRenderer>().sprite = Manager.UserRunesSprites[randomIndex];
 
-        Manager.userRunes.RemoveAt(index);
-        Manager.currentRuneSprites.RemoveAt(index);
+        // ^ Debug ========================
+        Debug.Log("Rune removed from pool and assigned: " + Manager.UserRunesIndex[randomIndex]);
+
+        Manager.UserRunesIndex.RemoveAt(randomIndex);
+        Manager.UserRunesSprites.RemoveAt(randomIndex);
+
+        // ^ Debug ========================
+        // Debug.Log("Remainign runes in pool: " + Manager.UserRunesIndex.Count);
+
+        // ^ Debug ========================
+        __CustomGlobalFunctions.DebugList(
+            Manager.UserRunesIndex,
+            "Remaining Runes in Pool: ",
+            "No runes left in pool."
+        );
+
+        // }
     }
 }

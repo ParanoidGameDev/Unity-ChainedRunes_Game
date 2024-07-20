@@ -5,107 +5,92 @@ using UnityEngine;
 
 public class _GameManager : MonoBehaviour
 {
-    public readonly List<string> RunesPool = new List<string>
-    {
-        "A",
-        "B",
-        "C",
-        "D",
-        "F",
-        "I",
-        "K",
-        "M",
-        "N",
-        "O",
-        "P",
-        "R",
-        "S",
-        "T",
-        "X",
-        "Y",
-        "Z",
-    };
-    public List<Sprite> runeSprites;
-    public List<string> currentRuneNames;
-    public List<string> tempRuneList;
-    public List<int> userRunes;
-    public List<Sprite> currentRuneSprites;
+    // ! Runes declarations
+    public readonly List<string> RunesPool =
+        new()
+        {
+            "A",
+            "B",
+            "C",
+            "D",
+            "F",
+            "I",
+            "K",
+            "M",
+            "N",
+            "O",
+            "P",
+            "R",
+            "S",
+            "T",
+            "X",
+            "Y",
+            "Z",
+        };
+    public List<Sprite> RuneSprites; // This preloads from te Unity inspector
 
-    // ! Enemy
-    public Transform enemyZone;
-    public GameObject enemy;
-    public GameObject enemyPrefab;
-    public List<int> currentEnemyKillingRunes;
+    // ! Managing Runes
+    public List<int> UserRunesIndex; // This preloads from RunesPool
+    public List<Sprite> UserRunesSprites; // Mirror variable to set sprite when called from Rune.cs
+    public List<string> TempRuneList; // Temp list to iterate usable runes
+
+    // ! Enemies
+    public Transform EnemyZone; // This preloads from te Unity inspector
+    public GameObject Enemy; // This will be generated after
+    public GameObject EnemyPrefab; // This preloads from te Unity inspector
 
     // Start is called before the first frame update
-    public int GetRandomRuneIndex()
-    {
-        return Random.Range(0, userRunes.Count);
-    }
-
     // Update is called once per frame
     void Awake()
     {
-        NewEnemy();
-        // InvokeRepeating("NewEnemy", 0f, 5f);
+        CreateNewEnemy();
+        // InvokeRepeating("CreateNewEnemy", 0f, 5f);
     }
 
-    public void NewEnemy()
+    public void CreateNewEnemy()
     {
-        if (enemy)
+        if (Enemy)
+            Destroy(Enemy);
+
+        // Create temp list to iterate runes
+        TempRuneList = new List<string>(RunesPool);
+
+        // Get 6 random runes checking that are not repeated
+        for (int i = 0; i < 6; i++)
         {
-            Destroy(enemy);
+            int randomIndex = Random.Range(0, TempRuneList.Count);
+
+            // Check if this randomIndex is already in the list
+            while (UserRunesIndex.Contains(randomIndex))
+            {
+                // If it IS in the list, generate another random to try again
+                randomIndex = Random.Range(0, TempRuneList.Count);
+            }
+
+            // If it is NOT in the list, then add it
+            UserRunesIndex.Add(randomIndex);
         }
 
-        enemy = Instantiate(enemyPrefab, enemyZone.position, Quaternion.identity, enemyZone);
-
-        currentRuneNames = new List<string>(RunesPool);
-        // currentRuneSprites = new List<Sprite>(RuneSprites);
-
-        List<int> killingRunes = enemy.GetComponent<Enemy>().killingRunes;
-        // ?? Debug.Log("killingRunes.Count: " + killingRunes.Count);
-
-        // Remove killingRunes from currentRuneNames
-        for (int i = killingRunes.Count; i > 0; i--)
+        // Adding Runes sprites to its var
+        foreach (var x in UserRunesIndex)
         {
-            currentRuneNames.RemoveAt(i);
-            Debug.Log("removed from pool = i: " + i);
-            // currentRuneSprites.RemoveAt(i);
+            UserRunesSprites.Add(RuneSprites[x]);
         }
 
-        userRunes = new List<int>(killingRunes);
-        // ?? Debug.Log(
-        // ??     "killingRunes.Count: " + killingRunes.Count + " == userRunes.Count: " + userRunes.Count
-        // ?? );
+        // Lastly, we preload an Enemy
+        Enemy = Instantiate(EnemyPrefab, EnemyZone.position, Quaternion.identity, EnemyZone);
 
-        // ?? Debug.Log("Despues de borrar las runes del enemigo: " + currentRuneNames.Count);
-        // ?? Debug.Log("killingRunes.Count: " + killingRunes.Count);
+        // ^ Debug ========================
+        __CustomGlobalFunctions.DebugList(UserRunesIndex, "Final UserRunesIndex: ", ".");
+    }
 
-        // Get remaining random runes from currentRuneNames
-        for (int j = 0; j < 6 - killingRunes.Count; j++)
-        {
-            // ?? Debug.Log(j);
-            int randomIndex = Random.Range(0, currentRuneNames.Count);
-            userRunes.Add(randomIndex);
-            currentRuneNames.RemoveAt(randomIndex);
-            Debug.Log("removed from pool = randomIndex: " + randomIndex);
-            // currentRuneSprites.RemoveAt(randomIndex);
-        }
+    public int GetRandomRuneIndex()
+    {
+        return Random.Range(0, UserRunesIndex.Count);
+    }
 
-        // ?? Debug.Log("Despues de borrar el restante para 6: " + currentRuneNames.Count);
-        // ?? Debug.Log("killingRunes.Count: " + killingRunes.Count);
-
-        // ?? string result = "UserRunes: ";
-        // ?? foreach (var rune in userRunes)
-        // ?? {
-        // ??     result += rune.ToString() + ", ";
-        // ?? }
-        // ?? Debug.Log(result[..^2] + ".");
-
-        foreach (var x in userRunes)
-        {
-            Debug.Log(x);
-            currentRuneSprites.Add(runeSprites[x]);
-        }
+    public List<int> GetRunesPoolIndex()
+    {
+        return UserRunesIndex;
     }
 }

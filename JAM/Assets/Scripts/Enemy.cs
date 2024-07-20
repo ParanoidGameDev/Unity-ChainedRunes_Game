@@ -24,6 +24,6 @@ public class Enemy : MonoBehaviour
         }
 
         // ^ Debug ========================
-        __CustomGlobalFunctions.DebugList(killingRunes, "Total killingRunes: ", "No killingRunes.");
+        // __CustomGlobalFunctions.DebugList(killingRunes, "Total killingRunes: ", "No killingRunes.");
     }
 }

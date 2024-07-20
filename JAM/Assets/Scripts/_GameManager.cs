@@ -81,7 +81,7 @@ public class _GameManager : MonoBehaviour
         Enemy = Instantiate(EnemyPrefab, EnemyZone.position, Quaternion.identity, EnemyZone);
 
         // ^ Debug ========================
-        __CustomGlobalFunctions.DebugList(UserRunesIndex, "Final UserRunesIndex: ", ".");
+        // __CustomGlobalFunctions.DebugList(UserRunesIndex, "Final UserRunesIndex: ", ".");
     }
 
     public int GetRandomRuneIndex()

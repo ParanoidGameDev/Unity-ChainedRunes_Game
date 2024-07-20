@@ -25,7 +25,7 @@ public class Rune : MonoBehaviour
         this.GetComponent<SpriteRenderer>().sprite = Manager.UserRunesSprites[randomIndex];
 
         // ^ Debug ========================
-        Debug.Log("Rune removed from pool and assigned: " + Manager.UserRunesIndex[randomIndex]);
+        // Debug.Log("Rune removed from pool and assigned: " + Manager.UserRunesIndex[randomIndex]);
 
         Manager.UserRunesIndex.RemoveAt(randomIndex);
         Manager.UserRunesSprites.RemoveAt(randomIndex);
@@ -34,11 +34,11 @@ public class Rune : MonoBehaviour
         // Debug.Log("Remainign runes in pool: " + Manager.UserRunesIndex.Count);
 
         // ^ Debug ========================
-        __CustomGlobalFunctions.DebugList(
-            Manager.UserRunesIndex,
-            "Remaining Runes in Pool: ",
-            "No runes left in pool."
-        );
+        // __CustomGlobalFunctions.DebugList(
+        //     Manager.UserRunesIndex,
+        //     "Remaining Runes in Pool: ",
+        //     "No runes left in pool."
+        // );
 
         // }
     }

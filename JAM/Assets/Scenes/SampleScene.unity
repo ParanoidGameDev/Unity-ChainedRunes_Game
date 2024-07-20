@@ -571,9 +571,9 @@ MonoBehaviour:
   UserRunesIndex: 
   UserRunesSprites: []
   TempRuneList: []
-  enemyZone: {fileID: 1955042780}
-  enemy: {fileID: 0}
-  enemyPrefab: {fileID: 713323790580467515, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
+  EnemyZone: {fileID: 1955042780}
+  Enemy: {fileID: 0}
+  EnemyPrefab: {fileID: 713323790580467515, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0

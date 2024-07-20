@@ -22,6 +22,14 @@ public class _MenuManager : MonoBehaviour
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
+    public void ShowCredits() {
+        SceneManager.LoadSceneAsync("Credits", LoadSceneMode.Additive);
+    }
+
+    public void HideCredits() {
+        SceneManager.UnloadSceneAsync("Credits");
+    }
+
     public void CloseSettings() {
         Time.timeScale = 1.0f;
         SceneManager.UnloadSceneAsync("Pause");

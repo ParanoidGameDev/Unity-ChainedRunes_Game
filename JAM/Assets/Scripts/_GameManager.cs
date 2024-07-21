@@ -40,6 +40,11 @@ public class _GameManager : MonoBehaviour
     public List<int> runesClickedByUser; // List that will fill with every Rune click
     public List<int> killingRunes; // This will be filled later when Enemy.cs is called
 
+    // ! Managing chains
+    public GameObject chainOriginPrefab; // This preloads from te Unity inspector
+    public Transform chainsLocation; // This preloads from te Unity hierarchy
+    public List<Sprite> poolChainsSprites; // This preloads from te Unity inspector;
+
     // ! Managin Enemies
     public Transform enemyZone; // This preloads from the Unity inspector
     public GameObject enemy; // This will be generated after
@@ -191,6 +196,25 @@ public class _GameManager : MonoBehaviour
         StageEnds(youWin);
     }
 
+    public void GetClickCoordinates()
+    {
+        chainsLocation = GameObject.Find("chainsLocation").transform;
+
+        Debug.Log("Clicked!");
+
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos2D = (Vector2)mousePos;
+
+        GameObject newChain = Instantiate(chainOriginPrefab, chainsLocation);
+        newChain.transform.localPosition = mousePos2D;
+        newChain.GetComponent<SpriteRenderer>().sprite = poolChainsSprites[0];
+
+        Debug.Log("Chain created at: " + mousePos2D.ToString());
+        // }
+    }
+
     private void StageEnds(bool winStatus)
     {
         timerText.text = "END!";
@@ -224,7 +248,6 @@ public class _GameManager : MonoBehaviour
                 player.playerHealth = 0;
 
             // TODO: Enemy fleeing animation plays here
-            Debug.Log("Enemy flee away!");
         }
         else
         {
@@ -253,7 +276,6 @@ public class _GameManager : MonoBehaviour
             scoreText.text = $"{score}";
 
             // TODO: Enemy death animation plays here
-            Debug.Log("Enemy dies!");
         }
 
         // Debug.Log("Cleaning runes lists");

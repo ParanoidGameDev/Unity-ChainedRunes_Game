@@ -26,6 +26,10 @@ public class Rune : MonoBehaviour
     {
         Manager = GameObject.Find("Manager").GetComponent<_GameManager>();
 
+        // Get the current mouse click position when clicking inside a Rune
+        this.GetComponent<Button>().onClick.AddListener(Manager.GetClickCoordinates);
+        Debug.Log("Listener created!");
+
         int randomIndex = Manager.GetRandomRuneIndex();
         this.GetComponent<Image>().sprite = Manager.userRunesSprites[randomIndex];
 

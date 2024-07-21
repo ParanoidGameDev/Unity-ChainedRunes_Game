@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class _GameManager : MonoBehaviour
 {
@@ -228,10 +229,14 @@ public class _GameManager : MonoBehaviour
 
     private void GameOver()
     {
+        scoreText.transform.SetParent(null);
+        DontDestroyOnLoad(scoreText.gameObject);
+
         // TODO: Player death animation plays here
         timerText.text = "GAME OVER";
 
         // TODO: Navigate to GameOver scene
+        SceneManager.LoadSceneAsync("GameOver");
     }
 
     private bool IsRunesExact(List<int> userRunes, List<int> enemyRunes)

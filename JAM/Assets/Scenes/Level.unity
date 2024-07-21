@@ -646,10 +646,15 @@ MonoBehaviour:
   - Z
   runesClickedByUser: 
   killingRunes: 0c0000000b0000001000000000000000
-  chainOriginPrefab: {fileID: 4201717547407203329, guid: ebc83839b3d32f64f9545f67353228c9, type: 3}
-  chainsLocation: {fileID: 873040152}
+  chainLinkPrefab: {fileID: 4201717547407203329, guid: ebc83839b3d32f64f9545f67353228c9, type: 3}
+  chainConnectionPrefab: {fileID: 6367926011237206998, guid: b672a9895b2fe4b4ead9bc8aea4b23f2, type: 3}
+  chainsLocation: {fileID: 1522686914}
+  chainsSpawned: []
   poolChainsSprites:
+  - {fileID: 21300000, guid: e83ec302a30a8ff4cac0cd9e78d79096, type: 3}
   - {fileID: 21300000, guid: dd49a951aa167704bbb3d9361af9325f, type: 3}
+  - {fileID: 21300000, guid: 5133173d599870642a2d3dd8462428d9, type: 3}
+  chainPositions: []
   enemyZone: {fileID: 1955042780}
   enemy: {fileID: 0}
   poolEnemies:
@@ -800,9 +805,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1522686914}
   - {fileID: 1351375522}
   - {fileID: 465350877}
-  - {fileID: 873040152}
   m_Father: {fileID: 145898058}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
@@ -960,41 +965,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8003772637391629673, guid: fb0a31d78a0a94148a56ace34a9864c8, type: 3}
   m_PrefabInstance: {fileID: 1054086420}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &873040151
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 873040152}
-  m_Layer: 0
-  m_Name: chainsLocation
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &873040152
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873040151}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 0.007823986, y: 0.007823986, z: 0.007823986}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 519420032}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -2.5662675}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &915193759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1564,6 +1534,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   escape: 0
+--- !u!1 &1522686913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1522686914}
+  m_Layer: 0
+  m_Name: chainsLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1522686914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522686913}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 519420032}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1559537640
 GameObject:
   m_ObjectHideFlags: 0

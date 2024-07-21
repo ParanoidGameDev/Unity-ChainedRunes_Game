@@ -14,7 +14,7 @@ public class Rune : MonoBehaviour
         if (Manager.runesClickedByUser.Count == Manager.killingRunes.Count)
         {
             this.GetComponent<Button>().interactable = false;
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, 0.5f);
         }
     }
 
@@ -30,7 +30,7 @@ public class Rune : MonoBehaviour
         Manager = GameObject.Find("Manager").GetComponent<_GameManager>();
 
         // Get the current mouse click position when clicking inside a Rune
-        this.GetComponent<Button>().onClick.AddListener(Manager.GetClickCoordinates);
+        this.GetComponent<Button>().onClick.AddListener(delegate { Manager.GetClickCoordinates(transform.position); });
         Debug.Log("Listener created!");
 
         int randomIndex = Manager.GetRandomRuneIndex();

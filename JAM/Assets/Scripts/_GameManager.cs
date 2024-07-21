@@ -46,9 +46,10 @@ public class _GameManager : MonoBehaviour
 
     // ! Managin Gameplay
     public Player player; // This preloads from te Unity inspector
-    public float enemyTimer = 5f; // Time (in seconds?) for each enemy
-    public TextMeshProUGUI timer; // This preloads from te Unity inspector
-    public int score; // This will update on each
+    public float enemyTimer = 6f; // Time (in seconds?) for each enemy
+    public TextMeshProUGUI timerText; // This preloads from te Unity inspector
+    public int score = 0; // This will update on each
+    public TextMeshProUGUI scoreText; // This will update on each
 
     void Update()
     {
@@ -67,7 +68,8 @@ public class _GameManager : MonoBehaviour
             {
                 enemyTimer -= Time.deltaTime;
                 string enemyTimerStr = enemyTimer.ToString();
-                timer.text = enemyTimerStr.Length >= 4 ? enemyTimer.ToString()[..4] : enemyTimerStr;
+                timerText.text =
+                    enemyTimerStr.Length >= 4 ? enemyTimer.ToString()[..4] : enemyTimerStr;
             }
 
             if (enemyTimer <= 0f && enemyTimer > -1f)
@@ -82,6 +84,7 @@ public class _GameManager : MonoBehaviour
 
     void Awake()
     {
+        scoreText.text = $"{score}";
         CreateNewEnemy();
         // InvokeRepeating("CreateNewEnemy", 0f, 5f);
     }
@@ -91,8 +94,8 @@ public class _GameManager : MonoBehaviour
         if (enemy)
             Destroy(enemy);
 
-        enemyTimer = 5f;
-        timer.text = enemyTimer.ToString();
+        enemyTimer = 6f;
+        timerText.text = enemyTimer.ToString();
 
         // Create temp list to iterate runes
         tempRuneList = new List<string>(runesPool);
@@ -159,13 +162,12 @@ public class _GameManager : MonoBehaviour
             $"===================== DID YOU WIN? ===================== >> {youWin.ToString().ToUpper()}"
         );
 
-        if (youWin)
-            StageEnds(youWin);
+        StageEnds(youWin);
     }
 
     private void StageEnds(bool winStatus)
     {
-        timer.text = "END!";
+        timerText.text = "END!";
         enemyTimer = -2f;
 
         if (enemy)
@@ -175,14 +177,16 @@ public class _GameManager : MonoBehaviour
         {
             Debug.Log("Player gets 1 damage");
             player.playerHealth -= 1;
-            // Enemy fleeing animation plays here
+            // TODO: Enemy fleeing animation plays here
             Debug.Log("Enemy flee away!");
         }
         else
         {
-            // Enemy death animation plays here
+            // TODO: Enemy death animation plays here
             Debug.Log("Enemy dies!");
             // +1 to score
+            score += 1;
+            scoreText.text = $"{score}";
         }
 
         Debug.Log("Cleaning runes lists");
@@ -194,7 +198,7 @@ public class _GameManager : MonoBehaviour
         if (player.playerHealth > 0)
         {
             // Wait 2 seconds then create the next enemy
-            Invoke(nameof(CreateNewEnemy), 5f);
+            Invoke(nameof(CreateNewEnemy), 2f);
         }
         else
         {
@@ -204,7 +208,10 @@ public class _GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        // Player animation plays here
+        // TODO: Player death animation plays here
+        timerText.text = "GAME OVER";
+
+        // TODO: Navigate to GameOver scene
     }
 
     private bool IsRunesExact(List<int> userRunes, List<int> enemyRunes)

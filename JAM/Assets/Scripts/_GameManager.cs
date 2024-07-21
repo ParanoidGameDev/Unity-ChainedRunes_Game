@@ -312,6 +312,10 @@ public class _GameManager : MonoBehaviour
     {
         enemyTimerToDefeat = -2f;
 
+        for (int k = 0; k < chainsLocation.childCount; k++)
+        {
+            Destroy(chainsLocation.GetChild(k).gameObject, 0.5f);
+        }
 
         if (!winStatus)
         {
@@ -384,10 +388,6 @@ public class _GameManager : MonoBehaviour
         //Enemy dies
         enemy = null;
 
-        for(int k = 0; k < chainsLocation.childCount; k++)
-        {
-            Destroy(chainsLocation.GetChild(k).gameObject, 0.5f);
-        }
 
         // Debug.Log("Cleaning runes lists");
         userRunesIndex = new();

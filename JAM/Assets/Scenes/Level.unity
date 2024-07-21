@@ -653,9 +653,13 @@ MonoBehaviour:
   killingRunes: 
   enemyZone: {fileID: 1955042780}
   enemy: {fileID: 0}
-  enemyPrefab: {fileID: 713323790580467515, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
+  poolEnemies:
+  - {fileID: 713323790580467515, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
+  - {fileID: 3513757526693096199, guid: 2be756191ff91dc4dad4f7e1175a0c00, type: 3}
+  - {fileID: 6739438364860577294, guid: ba99d95f78f18f946bea54e1c163f193, type: 3}
+  nextEnemyType: 0
   player: {fileID: 1054086421}
-  enemyTimer: 6
+  enemyTimerToDefeat: 0
   timerText: {fileID: 352496893}
   score: 0
   scoreText: {fileID: 181328771}
@@ -1122,6 +1126,10 @@ PrefabInstance:
       propertyPath: healthText
       value: 
       objectReference: {fileID: 1260592568}
+    - target: {fileID: 8911886673088924637, guid: fb0a31d78a0a94148a56ace34a9864c8, type: 3}
+      propertyPath: playerHealth
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

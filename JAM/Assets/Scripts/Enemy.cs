@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int health;
-    public List<int> killingRunes;
+    public int health; // This preloads from te Unity inspector
+    public List<int> killingRunes; // This holds the required runes to kill the enemy
     public _GameManager Manager;
     public List<Sprite> poolRunesSprites; // This preloads from te Unity inspector;
-    public List<Sprite> killingRunesSprites; //
     public GameObject enemyRunePrefab; // This preloads from te Unity inspector
     public Transform runeOrigin; // This preloads from te Unity hierarchy
     public List<GameObject> runesEnemylist; // This temporary saves the enemy shown runes
@@ -57,11 +56,19 @@ public class Enemy : MonoBehaviour
                 new Vector2(0.7f, 0 + 0.8f)
             };
 
+        List<Vector2> vectors = health switch
+        {
+            3 => three,
+            4 => four,
+            5 => five,
+            _ => throw new System.NotImplementedException(),
+        };
+
         int j = 0;
         foreach (int rune in killingRunes)
         {
             GameObject runeEnemy = Instantiate(enemyRunePrefab, runeOrigin);
-            runeEnemy.transform.localPosition = three[j];
+            runeEnemy.transform.localPosition = vectors[j];
             runeEnemy.GetComponent<SpriteRenderer>().sprite = poolRunesSprites[rune];
             j++;
             runesEnemylist.Add(runeEnemy);
@@ -79,6 +86,5 @@ public class Enemy : MonoBehaviour
         {
             Destroy(r);
         }
-        killingRunesSprites = new();
     }
 }

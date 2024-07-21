@@ -30,8 +30,8 @@ public class _GameManager : MonoBehaviour
     public List<Sprite> runeSprites; // This preloads from te Unity inspector
 
     // ! Difficulty
-    public bool runesCountDoesMatter = true;
-    public bool runesOrderDoesMatter = true;
+    public bool runesCountDoesMatter = true; // This rule could be implemented to change difficulty
+    public bool runesOrderDoesMatter = true; // This rule could be implemented to change difficulty
 
     // ! Managing Runes
     public List<int> userRunesIndex; // This preloads from RunesPool
@@ -43,14 +43,16 @@ public class _GameManager : MonoBehaviour
     // ! Managin Enemies
     public Transform enemyZone; // This preloads from the Unity inspector
     public GameObject enemy; // This will be generated after
-    public GameObject enemyPrefab; // This preloads from te Unity inspector
+
+    public List<GameObject> poolEnemies; // This preloads from te Unity inspector
+    public int nextEnemyType; // This will dictaminate the next Enemy difficulty
 
     // ! Managin Gameplay
     public Player player; // This preloads from te Unity inspector
-    public float enemyTimer = 6f; // Time (in seconds?) for each enemy
+    public float enemyTimerToDefeat; // Time (in seconds?) for each enemy
     public TextMeshProUGUI timerText; // This preloads from te Unity inspector
-    public int score = 0; // This will update on each
-    public TextMeshProUGUI scoreText; // This will update on each
+    public int score = 0; // This is the numeric value
+    public TextMeshProUGUI scoreText; // This is the string shown on screen
 
     // ! Managin Runes
     public GameObject runePrefab; // This preloads from the Unity inspector
@@ -67,21 +69,19 @@ public class _GameManager : MonoBehaviour
                 && runesClickedByUser.Count == killingRunes.Count
             )
             {
-                Debug.Log("First set");
                 CompareRunes();
             }
-            if (enemy && enemyTimer > 0f)
+            if (enemy && enemyTimerToDefeat > 0f)
             {
-                enemyTimer -= Time.deltaTime;
-                string enemyTimerStr = enemyTimer.ToString();
+                enemyTimerToDefeat -= Time.deltaTime;
+                string enemyTimerStr = enemyTimerToDefeat.ToString();
                 timerText.text =
-                    enemyTimerStr.Length >= 4 ? enemyTimer.ToString()[..4] : enemyTimerStr;
+                    enemyTimerStr.Length >= 4 ? enemyTimerToDefeat.ToString()[..4] : enemyTimerStr;
             }
 
-            if (enemyTimer <= 0f && enemyTimer > -1f)
+            if (enemyTimerToDefeat <= 0f && enemyTimerToDefeat > -1f)
             {
-                enemyTimer = -2f;
-                Debug.Log("Third set");
+                enemyTimerToDefeat = -2f;
                 StageEnds(false);
                 return;
             }
@@ -91,7 +91,6 @@ public class _GameManager : MonoBehaviour
     void Awake()
     {
         scoreText.text = $"{score}";
-
         Invoke(nameof(CreateNewEnemy), 1);
         // InvokeRepeating("CreateNewEnemy", 0f, 5f);
     }
@@ -100,8 +99,8 @@ public class _GameManager : MonoBehaviour
     {
         enemyZone.GetComponent<Animator>().Play("enemyApproaches");
 
-        enemyTimer = 6f;
-        timerText.text = enemyTimer.ToString();
+        enemyTimerToDefeat = 5.5f;
+        timerText.text = enemyTimerToDefeat.ToString();
 
         // Create temp list to iterate runes
         tempRuneList = new List<string>(runesPool);
@@ -129,22 +128,36 @@ public class _GameManager : MonoBehaviour
             userRunesSprites.Add(runeSprites[x]);
             GameObject newRune = Instantiate(runePrefab, gameCanvas);
             newRune.transform.localPosition = Vector3.zero;
-            r++;
             // Instanciar las Runas manualmente en una lista
             runesList.Add(newRune);
-            runesList[r-1].GetComponent<Animator>().Play("rune" + r);
+            runesList[r].GetComponent<Animator>().Play("rune" + (6 - r));
+            r++;
         }
 
-        // Lastly, we preload an Enemy
-        enemy = Instantiate(enemyPrefab, enemyZone.position, Quaternion.identity, enemyZone);
+        // Creating a pseudo random value to determine next Enemy type
+        int pseudoRandom = Random.Range(0, 100);
+        nextEnemyType =
+            (pseudoRandom > 80)
+                ? 2 // Boss
+                : (pseudoRandom > 30)
+                    ? 1 // Mage
+                    : 0; // Cyclop
+
+        // Lastly, we preload a random Enemy
+        enemy = Instantiate(
+            poolEnemies[nextEnemyType],
+            enemyZone.position,
+            Quaternion.identity,
+            enemyZone
+        );
         killingRunes = enemy.GetComponent<Enemy>().killingRunes;
 
         // ^ Debug ========================
-        Debug.Log($"Required runes pressed (enemy health): {enemy.GetComponent<Enemy>().health}");
-        __CustomGlobalFunctions.DebugList(
-            enemy.GetComponent<Enemy>().killingRunes,
-            "Enemy killing runes: "
-        );
+        // Debug.Log($"Required runes pressed (enemy health): {enemy.GetComponent<Enemy>().health}");
+        // __CustomGlobalFunctions.DebugList(
+        //     enemy.GetComponent<Enemy>().killingRunes,
+        //     "Enemy killing runes: "
+        // );
     }
 
     public void CompareRunes()
@@ -170,20 +183,17 @@ public class _GameManager : MonoBehaviour
 
         // ? And nothing else matters ♫ ♪ ♫ ...
 
-        Debug.Log(
-            $"===================== DID YOU WIN? ===================== >> {youWin.ToString().ToUpper()}"
-        );
+        // Debug.Log(
+        //     $"===================== DID YOU WIN? ===================== >> {youWin.ToString().ToUpper()}"
+        // );
 
         StageEnds(youWin);
     }
 
     private void StageEnds(bool winStatus)
     {
-
-
-
         timerText.text = "OUCH!";
-        enemyTimer = -2f;
+        enemyTimerToDefeat = -2f
 
 
         if (!winStatus)
@@ -193,6 +203,27 @@ public class _GameManager : MonoBehaviour
 
             Debug.Log("Player gets 1 damage");
             player.playerHealth -= 1;
+            switch (nextEnemyType)
+            {
+                case 0:
+                    // Cyclop deals 1 dmg
+                    timerText.text = "Ooff!";
+                    player.playerHealth -= 1;
+                    break;
+                case 1:
+                    // Mage deals 2 dmg
+                    timerText.text = "Ouch!";
+                    player.playerHealth -= 2;
+                    break;
+                case 2:
+                    // Boss deals 3 dmg
+                    timerText.text = "Aggh!";
+                    player.playerHealth -= 3;
+                    break;
+            }
+
+            if (player.playerHealth < 0)
+                player.playerHealth = 0;
 
             // TODO: Enemy fleeing animation plays here
             Debug.Log("Enemy flee away!");
@@ -208,20 +239,35 @@ public class _GameManager : MonoBehaviour
             //Enemy dies
             enemy = null;
 
-            Debug.Log("Enemy dies!");
-            
-            score += 1;
+            switch (nextEnemyType)
+            {
+                case 0:
+                    // Cyclop gives 1 point
+                    timerText.text = "Nice!";
+                    score += 1;
+                    break;
+                case 1:
+                    // Mage gives 2 points
+                    timerText.text = "Woo!";
+                    score += 2;
+                    break;
+                case 2:
+                    // Boss gives 5 points
+                    timerText.text = "Yeah!";
+                    score += 5;
+                    // Also heals 1!!
+                    player.playerHealth += 1;
+                    // TODO: Visually display an icon for health up
+                    break;
+            }
+
             scoreText.text = $"{score}";
+
+            // TODO: Enemy death animation plays here
+            Debug.Log("Enemy dies!");
         }
 
-        Debug.Log("Cleaning runes lists");
-        userRunesIndex = new();
-        userRunesSprites = new();
-        runesClickedByUser = new();
-        killingRunes = new();
-        runesList = new();
-
-        Debug.Log("Cleaning runes lists");
+        // Debug.Log("Cleaning runes lists");
         userRunesIndex = new();
         userRunesSprites = new();
         runesClickedByUser = new();

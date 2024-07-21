@@ -242,12 +242,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1c13ae0197f89874da0e71f6645102ee, type: 3}
   - {fileID: 21300000, guid: f1a5986d77a7e8c4faf0550641dd984f, type: 3}
   - {fileID: 21300000, guid: 2f1c93206a66b0b408d60bf8e28bfc97, type: 3}
+  runesCountDoesMatter: 1
+  runesOrderDoesMatter: 1
   userRunesIndex: 
   userRunesSprites: []
   tempRuneList: []
+  runesClickedByUser: 
+  killingRunes: 
   enemyZone: {fileID: 1955042780}
   enemy: {fileID: 0}
   enemyPrefab: {fileID: 713323790580467515, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
+  player: {fileID: 1054086421}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +679,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb0a31d78a0a94148a56ace34a9864c8, type: 3}
+--- !u!114 &1054086421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8911886673088924637, guid: fb0a31d78a0a94148a56ace34a9864c8, type: 3}
+  m_PrefabInstance: {fileID: 1054086420}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2155252b03ed66f49be416e7d370f084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1233171585
 GameObject:
   m_ObjectHideFlags: 0

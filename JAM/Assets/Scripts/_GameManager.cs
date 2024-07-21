@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class _GameManager : MonoBehaviour
@@ -226,20 +227,22 @@ public class _GameManager : MonoBehaviour
                 linkPos.x = chainPositions[c + 1].x - chainPositions[c].x;
                 linkPos.y = chainPositions[c + 1].y - chainPositions[c].y;
 
-                if (c == 0)
-                {
-                    Vector2 mousePositions = new();
-                    mousePositions = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-                    linkPos.x = mousePositions.x - chainPositions[c].x;
-                    linkPos.y = mousePositions.y - chainPositions[c].y;
-                }
             }
 
+            if (c == 0)
+            {
+                GetComponent<AudioSource>().Play();
+                Vector2 mousePositions = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                linkPos.x = mousePositions.x - chainPositions[c].x;
+                linkPos.y = mousePositions.y - chainPositions[c].y;
+            }
 
             if (c == chainsSpawned.Count - 1)
             {
                 if(chainsSpawned.Count > 1) {
+
+                    GetComponent<AudioSource>().Play();
 
                     connectionPos.x = chainPositions[c - 1].x - chainPositions[c].x;
                     connectionPos.y = chainPositions[c - 1].y - chainPositions[c].y;
@@ -281,9 +284,6 @@ public class _GameManager : MonoBehaviour
                         finalConnection.transform.position = chainsSpawned[0].transform.position;
                         finalConnection.transform.rotation = fconnectionQAngle;
 
-
-                        linkAngle = Mathf.Atan2(linkPos.y, linkPos.x) * Mathf.Rad2Deg;
-                        linkQAngle = Quaternion.Euler(0, 0, linkAngle + 90);
                     }
                     chainsSpawned[c].GetComponent<SpriteRenderer>().sprite = poolChainsSprites[2];
                 }
@@ -312,9 +312,13 @@ public class _GameManager : MonoBehaviour
     {
         enemyTimerToDefeat = -2f;
 
+        for (int k = 0; k < runesList.Count; k++)
+        {
+            runesList[k].GetComponent<Button>().enabled = false;
+        }
         for (int k = 0; k < chainsLocation.childCount; k++)
         {
-            Destroy(chainsLocation.GetChild(k).gameObject, 0.5f);
+            Destroy(chainsLocation.GetChild(k).gameObject);
         }
 
         if (!winStatus)

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int playerHealth = 6;
+    public int playerHealth = 10;
     public TextMeshPro healthText;
 
     // Start is called before the first frame update

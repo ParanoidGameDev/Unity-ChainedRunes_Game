@@ -53,7 +53,6 @@ public class _GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText; // This will update on each
 
     // ! Managin Runes
-
     public GameObject runePrefab; // This preloads from the Unity inspector
     public Transform gameCanvas; // This preloads from the Unity inspector
     public List<GameObject> runesList; // Rune objects generated per enemy
@@ -92,14 +91,14 @@ public class _GameManager : MonoBehaviour
     void Awake()
     {
         scoreText.text = $"{score}";
-        CreateNewEnemy();
+
+        Invoke(nameof(CreateNewEnemy), 1);
         // InvokeRepeating("CreateNewEnemy", 0f, 5f);
     }
 
     public void CreateNewEnemy()
     {
-        if (enemy)
-            Destroy(enemy);
+        enemyZone.GetComponent<Animator>().Play("enemyApproaches");
 
         enemyTimer = 6f;
         timerText.text = enemyTimer.ToString();
@@ -180,24 +179,37 @@ public class _GameManager : MonoBehaviour
 
     private void StageEnds(bool winStatus)
     {
-        timerText.text = "END!";
+
+
+
+        timerText.text = "OUCH!";
         enemyTimer = -2f;
 
-        if (enemy)
-            Destroy(enemy);
 
         if (!winStatus)
         {
+            enemyZone.GetComponent<Animator>().Play("enemyAttack");
+            player.GetComponent<Animator>().Play("hurtCharacters");
+
             Debug.Log("Player gets 1 damage");
             player.playerHealth -= 1;
+
             // TODO: Enemy fleeing animation plays here
             Debug.Log("Enemy flee away!");
+            Destroy(enemy.gameObject, 2f);
         }
         else
         {
-            // TODO: Enemy death animation plays here
+            player.transform.parent.GetComponent<Animator>().Play("playerAttack");
+            enemy.GetComponent<Animator>().Play("deadCharacters");
+            enemy.GetComponent<Enemy>().KillChildRunes();
+            Destroy(enemy.gameObject, 2f);
+
+            //Enemy dies
+            enemy = null;
+
             Debug.Log("Enemy dies!");
-            // +1 to score
+            
             score += 1;
             scoreText.text = $"{score}";
         }
@@ -219,11 +231,14 @@ public class _GameManager : MonoBehaviour
         if (player.playerHealth > 0)
         {
             // Wait 2 seconds then create the next enemy
-            Invoke(nameof(CreateNewEnemy), 2f);
+            Invoke(nameof(CreateNewEnemy), 2.5f);
         }
         else
         {
-            GameOver();
+            timerText.text = "GAME OVER";
+            Destroy(player.gameObject, 3f);
+            player.GetComponent<Animator>().Play("deadCharacters");
+            Invoke(nameof(GameOver), 3f);
         }
     }
 
@@ -232,10 +247,7 @@ public class _GameManager : MonoBehaviour
         scoreText.transform.SetParent(null);
         DontDestroyOnLoad(scoreText.gameObject);
 
-        // TODO: Player death animation plays here
-        timerText.text = "GAME OVER";
 
-        // TODO: Navigate to GameOver scene
         SceneManager.LoadSceneAsync("GameOver");
     }
 

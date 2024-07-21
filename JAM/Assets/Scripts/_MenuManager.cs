@@ -1,12 +1,21 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class _MenuManager : MonoBehaviour
 {
     [SerializeField] private _InputManager input;
 
     public static bool settings = false;
-    
+
+    public Button mainMenuButton;
+
+    private void Start() {
+        if (this.mainMenuButton) {
+            this.mainMenuButton.gameObject.SetActive(SceneManager.GetActiveScene().name != "MainMenu");
+        }
+    }
+
     private void LateUpdate() {
         if (this.input.escape) {
             if (settings) this.CloseSettings();

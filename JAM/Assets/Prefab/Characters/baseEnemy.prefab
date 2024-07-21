@@ -120,6 +120,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c541d38189bb2e4c917958afc40e786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  killingRunes: 
+  Manager: {fileID: 0}
+  poolRunesSprites:
+  - {fileID: 21300000, guid: 98bcbf73a5743354a911c83da369f01e, type: 3}
+  - {fileID: 21300000, guid: e3167f69a4a41f24490d39b6de5773a2, type: 3}
+  - {fileID: 21300000, guid: 535fc04b16010444c9abdefd68be5e8e, type: 3}
+  - {fileID: 21300000, guid: a5ce8c5c87308a74c99cae591e720083, type: 3}
+  - {fileID: 21300000, guid: 3448356b09c4bc84e885ba9c2a16a999, type: 3}
+  - {fileID: 21300000, guid: dd90eb5b3b3c1ff40a40c07a92eb0bbd, type: 3}
+  - {fileID: 21300000, guid: 6f3807ba7e223c04eb146b39efaa27bf, type: 3}
+  - {fileID: 21300000, guid: 60596a0905ce13445b0f4c53708ed070, type: 3}
+  - {fileID: 21300000, guid: 2d261142e94c5e043a1f1992ab7d3935, type: 3}
+  - {fileID: 21300000, guid: b98c51516785b334f83c09c822f47b01, type: 3}
+  - {fileID: 21300000, guid: dae255bf8fbcbad42a29282692d3471f, type: 3}
+  - {fileID: 21300000, guid: 07256942cdf4ec547926d9eeb0aa1220, type: 3}
+  - {fileID: 21300000, guid: 7972bb4479e643c469444c6e7b8bc3b3, type: 3}
+  - {fileID: 21300000, guid: c2fd9017c22dcea4db11986c769a7a7b, type: 3}
+  - {fileID: 21300000, guid: 367933ed03e06ca43a6a20b42ca4bad4, type: 3}
+  - {fileID: 21300000, guid: 614d33b129f688b4996da1e29047bdab, type: 3}
+  - {fileID: 21300000, guid: 2a35fce6347817d4f951bc2ec543d91b, type: 3}
+  killingRunesSprites: []
+  enemyRunePrefab: {fileID: 2214488695958537639, guid: b95a6e6f609b2c54ead1adc3d721d28f, type: 3}
+  runeOrigin: {fileID: 0}
 --- !u!1 &8535397438181930993
 GameObject:
   m_ObjectHideFlags: 0

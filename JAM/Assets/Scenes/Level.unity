@@ -309,10 +309,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1351375522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5, y: 175}
-  m_SizeDelta: {x: 60, y: 30}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.48999023, y: 588.63}
+  m_SizeDelta: {x: -429.05, y: -1176.95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &465350876
 GameObject:
@@ -387,9 +387,12 @@ MonoBehaviour:
   enemy: {fileID: 0}
   enemyPrefab: {fileID: 713323790580467515, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
   player: {fileID: 1054086421}
-  enemyTimer: 10
+  enemyTimer: 5
   timer: {fileID: 352496893}
-  youWin: 0
+  score: 0
+  runePrefab: {fileID: 2451540537953894242, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+  gameCanvas: {fileID: 2101518355}
+  runesList: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,6 +687,108 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8003772637391629673, guid: fb0a31d78a0a94148a56ace34a9864c8, type: 3}
   m_PrefabInstance: {fileID: 1054086420}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &809611872
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1351375522}
+    m_Modifications:
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 192
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451540537953894242, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+      propertyPath: m_Name
+      value: Rune
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+--- !u!224 &809611873 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1645748315915934180, guid: 332551bac10713e4fb2d1ee86e127528, type: 3}
+  m_PrefabInstance: {fileID: 809611872}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &915193759
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,6 +1044,8 @@ RectTransform:
   - {fileID: 1563540315}
   - {fileID: 915193760}
   - {fileID: 352496895}
+  - {fileID: 2101518355}
+  - {fileID: 809611873}
   m_Father: {fileID: 519420032}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3309,6 +3416,41 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &2101518354
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2101518355}
+  m_Layer: 0
+  m_Name: runes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2101518355
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101518354}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1351375522}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -328}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2103158385
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -40,7 +41,7 @@ public class _GameManager : MonoBehaviour
     public List<int> killingRunes; // This will be filled later when Enemy.cs is called
 
     // ! Managin Enemies
-    public Transform enemyZone; // This preloads from te Unity inspector
+    public Transform enemyZone; // This preloads from the Unity inspector
     public GameObject enemy; // This will be generated after
     public GameObject enemyPrefab; // This preloads from te Unity inspector
 
@@ -49,6 +50,12 @@ public class _GameManager : MonoBehaviour
     public float enemyTimer = 5f; // Time (in seconds?) for each enemy
     public TextMeshProUGUI timer; // This preloads from te Unity inspector
     public int score; // This will update on each
+
+    // ! Managin Runes
+
+    public GameObject runePrefab; // This preloads from the Unity inspector
+    public Transform gameCanvas; // This preloads from the Unity inspector
+    public List<GameObject> runesList; // Rune objects generated per enemy
 
     void Update()
     {
@@ -91,7 +98,7 @@ public class _GameManager : MonoBehaviour
         if (enemy)
             Destroy(enemy);
 
-        enemyTimer = 5f;
+        enemyTimer = 10f;
         timer.text = enemyTimer.ToString();
 
         // Create temp list to iterate runes
@@ -113,11 +120,17 @@ public class _GameManager : MonoBehaviour
             userRunesIndex.Add(randomIndex);
         }
 
+        int r = 0;
         // Adding Runes sprites to its var
         foreach (var x in userRunesIndex)
         {
             userRunesSprites.Add(runeSprites[x]);
+            GameObject newRune = Instantiate(runePrefab, gameCanvas);
+            newRune.transform.localPosition = Vector3.zero;
+            r++;
             // Instanciar las Runas manualmente en una lista
+            runesList.Add(newRune);
+            runesList[r-1].GetComponent<Animator>().Play("rune" + r);
         }
 
         // Lastly, we preload an Enemy
@@ -159,8 +172,7 @@ public class _GameManager : MonoBehaviour
             $"===================== DID YOU WIN? ===================== >> {youWin.ToString().ToUpper()}"
         );
 
-        if (youWin)
-            StageEnds(youWin);
+        StageEnds(youWin);
     }
 
     private void StageEnds(bool winStatus)
@@ -190,11 +202,12 @@ public class _GameManager : MonoBehaviour
         userRunesSprites = new();
         runesClickedByUser = new();
         killingRunes = new();
+        runesList = new();
 
         if (player.playerHealth > 0)
         {
             // Wait 2 seconds then create the next enemy
-            Invoke(nameof(CreateNewEnemy), 5f);
+            Invoke(nameof(CreateNewEnemy), 2f);
         }
         else
         {

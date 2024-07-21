@@ -105,7 +105,6 @@ public class _GameManager : MonoBehaviour
         enemyZone.GetComponent<Animator>().Play("enemyApproaches");
 
         enemyTimerToDefeat = 5.5f;
-        timerText.text = enemyTimerToDefeat.ToString();
 
         // Create temp list to iterate runes
         tempRuneList = new List<string>(runesPool);
@@ -216,8 +215,7 @@ public class _GameManager : MonoBehaviour
 
     private void StageEnds(bool winStatus)
     {
-        timerText.text = "OUCH!";
-        enemyTimerToDefeat = -2f
+        enemyTimerToDefeat = -2f;
 
 
         if (!winStatus)
@@ -251,17 +249,15 @@ public class _GameManager : MonoBehaviour
 
             // TODO: Enemy fleeing animation plays here
             Debug.Log("Enemy flee away!");
-            Destroy(enemy.gameObject, 2f);
+            timerText.text = "OUCH!";
         }
         else
         {
+            timerText.text = "---";
             player.transform.parent.GetComponent<Animator>().Play("playerAttack");
             enemy.GetComponent<Animator>().Play("deadCharacters");
             enemy.GetComponent<Enemy>().KillChildRunes();
-            Destroy(enemy.gameObject, 2f);
 
-            //Enemy dies
-            enemy = null;
 
             switch (nextEnemyType)
             {
@@ -289,6 +285,9 @@ public class _GameManager : MonoBehaviour
 
             // TODO: Enemy death animation plays here
         }
+        Destroy(enemy.gameObject, 2f);
+        //Enemy dies
+        enemy = null;
 
         // Debug.Log("Cleaning runes lists");
         userRunesIndex = new();

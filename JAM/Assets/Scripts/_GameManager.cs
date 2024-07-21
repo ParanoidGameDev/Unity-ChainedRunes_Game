@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class _GameManager : MonoBehaviour
@@ -43,14 +44,39 @@ public class _GameManager : MonoBehaviour
     public GameObject enemy; // This will be generated after
     public GameObject enemyPrefab; // This preloads from te Unity inspector
 
-    // ! Managin Player
+    // ! Managin Gameplay
     public Player player; // This preloads from te Unity inspector
+    public float enemyTimer = 5f; // Time (in seconds?) for each enemy
+    public TextMeshProUGUI timer; // This preloads from te Unity inspector
+    public int score; // This will update on each
 
     void Update()
     {
-        if (runesCountDoesMatter && runesClickedByUser.Count == killingRunes.Count)
+        if (player.playerHealth > 0)
         {
-            CompareRunes();
+            if (
+                runesCountDoesMatter
+                && killingRunes.Count > 0 // This must be > 0 to avoid looping when resseting
+                && runesClickedByUser.Count == killingRunes.Count
+            )
+            {
+                Debug.Log("First set");
+                CompareRunes();
+            }
+            if (enemy && enemyTimer > 0f)
+            {
+                enemyTimer -= Time.deltaTime;
+                string enemyTimerStr = enemyTimer.ToString();
+                timer.text = enemyTimerStr.Length >= 4 ? enemyTimer.ToString()[..4] : enemyTimerStr;
+            }
+
+            if (enemyTimer <= 0f && enemyTimer > -1f)
+            {
+                enemyTimer = -2f;
+                Debug.Log("Third set");
+                StageEnds(false);
+                return;
+            }
         }
     }
 
@@ -64,6 +90,9 @@ public class _GameManager : MonoBehaviour
     {
         if (enemy)
             Destroy(enemy);
+
+        enemyTimer = 5f;
+        timer.text = enemyTimer.ToString();
 
         // Create temp list to iterate runes
         tempRuneList = new List<string>(runesPool);
@@ -105,17 +134,18 @@ public class _GameManager : MonoBehaviour
 
     public void CompareRunes()
     {
-        bool youWin = runesCountDoesMatter && runesClickedByUser.Count == killingRunes.Count;
-
-        youWin = runesOrderDoesMatter
-            // ^ Order DOES matters
-            ? youWin && IsRunesExact(runesClickedByUser, killingRunes)
-            // ^ Order DOESN'T matters
-            : youWin && IsRunesAnyOrder(runesClickedByUser, killingRunes);
-
+        bool youWin = IsRunesExact(runesClickedByUser, killingRunes);
         // ***************************************
         // ** For future updates and features
         // ***************************************
+        // youWin =
+        // runesCountDoesMatter
+        // && runesOrderDoesMatter
+        // && runesClickedByUser.Count == killingRunes.Count
+        // ^ Order DOES matters
+        // ? youWin && IsRunesExact(runesClickedByUser, killingRunes)
+        // ^ Order DOESN'T matters
+        // : youWin && IsRunesAnyOrder(runesClickedByUser, killingRunes);
         // ^ Count DOESN'T matters and order matters
         // youWin = (runesOrderDoesMatter && IsRunesAnyOrder(runesClickedByUser, killingRunes));
         // ^ Count DOESN'T matters and order DOESN'T matters
@@ -123,19 +153,58 @@ public class _GameManager : MonoBehaviour
         // ***************************************
         // ***************************************
 
+        // ? And nothing else matters ♫ ♪ ♫ ...
+
         Debug.Log(
             $"===================== DID YOU WIN? ===================== >> {youWin.ToString().ToUpper()}"
         );
 
-        if (!youWin)
+        if (youWin)
+            StageEnds(youWin);
+    }
+
+    private void StageEnds(bool winStatus)
+    {
+        timer.text = "END!";
+        enemyTimer = -2f;
+
+        if (enemy)
+            Destroy(enemy);
+
+        if (!winStatus)
+        {
+            Debug.Log("Player gets 1 damage");
             player.playerHealth -= 1;
+            // Enemy fleeing animation plays here
+            Debug.Log("Enemy flee away!");
+        }
+        else
+        {
+            // Enemy death animation plays here
+            Debug.Log("Enemy dies!");
+            // +1 to score
+        }
 
-        // Enemy death animation plays here
-        runesClickedByUser.Clear();
-        killingRunes.Clear();
-        CreateNewEnemy();
+        Debug.Log("Cleaning runes lists");
+        userRunesIndex = new();
+        userRunesSprites = new();
+        runesClickedByUser = new();
+        killingRunes = new();
 
-        // ? And nothing else matters ♫ ♪ ♫ ...
+        if (player.playerHealth > 0)
+        {
+            // Wait 2 seconds then create the next enemy
+            Invoke(nameof(CreateNewEnemy), 5f);
+        }
+        else
+        {
+            GameOver();
+        }
+    }
+
+    private void GameOver()
+    {
+        // Player animation plays here
     }
 
     private bool IsRunesExact(List<int> userRunes, List<int> enemyRunes)

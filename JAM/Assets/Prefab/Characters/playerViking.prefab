@@ -68,5 +68,26 @@ PrefabInstance:
     - {fileID: 9024488705683685858, guid: 0b6d87464a286fc49a2b61fd9354bef3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2820708793501038828, guid: 0b6d87464a286fc49a2b61fd9354bef3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8911886673088924637}
   m_SourcePrefab: {fileID: 100100000, guid: 0b6d87464a286fc49a2b61fd9354bef3, type: 3}
+--- !u!1 &3175581668505342337 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2820708793501038828, guid: 0b6d87464a286fc49a2b61fd9354bef3, type: 3}
+  m_PrefabInstance: {fileID: 807486837700684141}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8911886673088924637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3175581668505342337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2155252b03ed66f49be416e7d370f084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: 5

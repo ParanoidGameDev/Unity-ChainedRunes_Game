@@ -242,12 +242,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1c13ae0197f89874da0e71f6645102ee, type: 3}
   - {fileID: 21300000, guid: f1a5986d77a7e8c4faf0550641dd984f, type: 3}
   - {fileID: 21300000, guid: 2f1c93206a66b0b408d60bf8e28bfc97, type: 3}
+  runesCountDoesMatter: 1
+  runesOrderDoesMatter: 1
   userRunesIndex: 
   userRunesSprites: []
   tempRuneList: []
+  runesClickedByUser: 
+  killingRunes: 
   enemyZone: {fileID: 1955042780}
   enemy: {fileID: 0}
   enemyPrefab: {fileID: 713323790580467515, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
+  player: {fileID: 1054086421}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +679,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb0a31d78a0a94148a56ace34a9864c8, type: 3}
+--- !u!114 &1054086421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8911886673088924637, guid: fb0a31d78a0a94148a56ace34a9864c8, type: 3}
+  m_PrefabInstance: {fileID: 1054086420}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2155252b03ed66f49be416e7d370f084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1233171585
 GameObject:
   m_ObjectHideFlags: 0
@@ -3076,8 +3092,7 @@ Transform:
   m_LocalPosition: {x: 3.5, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2118081458}
+  m_Children: []
   m_Father: {fileID: 145898058}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1955042781
@@ -3288,68 +3303,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103158385}
   m_CullTransparentMesh: 1
---- !u!1001 &2118081457
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1955042780}
-    m_Modifications:
-    - target: {fileID: 713323790580467515, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-      propertyPath: m_Name
-      value: enemyCyclop
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396665063259683795, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396665063259683795, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396665063259683795, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396665063259683795, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396665063259683795, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396665063259683795, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396665063259683795, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396665063259683795, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396665063259683795, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396665063259683795, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
---- !u!4 &2118081458 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5396665063259683795, guid: ed36b535d3afbac49a7af4db4847be95, type: 3}
-  m_PrefabInstance: {fileID: 2118081457}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

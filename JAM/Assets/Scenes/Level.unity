@@ -464,9 +464,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'game
-
-    over'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 21a9edfcdcf195d46b322fd55e0bd8ff, type: 2}
   m_sharedMaterial: {fileID: 6658032518339048073, guid: 21a9edfcdcf195d46b322fd55e0bd8ff, type: 2}
@@ -1448,11 +1446,11 @@ RectTransform:
   m_Children:
   - {fileID: 621302183}
   - {fileID: 1563540315}
-  - {fileID: 915193760}
   - {fileID: 352496895}
   - {fileID: 215348614}
   - {fileID: 181328770}
   - {fileID: 2101518355}
+  - {fileID: 915193760}
   m_Father: {fileID: 519420032}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

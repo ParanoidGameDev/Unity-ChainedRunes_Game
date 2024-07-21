@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -75,6 +76,11 @@ public class Enemy : MonoBehaviour
     }
 
     private void OnDestroy()
+    {
+        if(this.transform.childCount > 0) KillChildRunes();
+    }
+
+    public void KillChildRunes()
     {
         foreach (var r in runesEnemylist)
         {

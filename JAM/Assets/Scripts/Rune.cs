@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Rune : MonoBehaviour
@@ -24,6 +25,8 @@ public class Rune : MonoBehaviour
 
     public void GetRune()
     {
+
+
         Manager = GameObject.Find("Manager").GetComponent<_GameManager>();
 
         // Get the current mouse click position when clicking inside a Rune

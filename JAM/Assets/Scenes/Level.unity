@@ -651,9 +651,8 @@ MonoBehaviour:
   chainsLocation: {fileID: 1522686914}
   chainsSpawned: []
   poolChainsSprites:
-  - {fileID: 21300000, guid: e83ec302a30a8ff4cac0cd9e78d79096, type: 3}
+  - {fileID: 21300000, guid: bb18ce90272c4e24c985f39ead159346, type: 3}
   - {fileID: 21300000, guid: dd49a951aa167704bbb3d9361af9325f, type: 3}
-  - {fileID: 21300000, guid: 5133173d599870642a2d3dd8462428d9, type: 3}
   chainPositions: []
   enemyZone: {fileID: 1955042780}
   enemy: {fileID: 0}

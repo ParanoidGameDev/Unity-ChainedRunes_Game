@@ -66,7 +66,7 @@ public class _GameManager : MonoBehaviour
     // ! Managin Runes
     public GameObject runePrefab; // This preloads from the Unity inspector
     public Transform runesZone; // This preloads from the Unity inspector
-    public List<GameObject> runesList; // Rune objects generated per enemy
+    public List<GameObject> runesList; // Rune objects generated based on enemy health
 
     // ! Managin audio
     public AudioSource enemyZoneAudio1;
@@ -78,9 +78,6 @@ public class _GameManager : MonoBehaviour
     public AudioClip win2;
     public AudioClip win3;
     public AudioClip attack;
-
-    // ! Temp fix
-    public GameObject blockTouch; // This preloads from the Unity inspector
 
     void Update()
     {
@@ -115,13 +112,10 @@ public class _GameManager : MonoBehaviour
     {
         scoreText.text = $"{score}";
         Invoke(nameof(CreateNewEnemy), 1);
-        // InvokeRepeating("CreateNewEnemy", 0f, 5f);
     }
 
     public void CreateNewEnemy()
     {
-        blockTouch.SetActive(false);
-
         enemyZone.GetComponent<Animator>().Play("enemyApproaches");
 
         enemyTimerToDefeat = 6f;
@@ -175,19 +169,10 @@ public class _GameManager : MonoBehaviour
             enemyZone
         );
         killingRunes = enemy.GetComponent<Enemy>().killingRunes;
-
-        // ^ Debug ========================
-        // Debug.Log($"Required runes pressed (enemy health): {enemy.GetComponent<Enemy>().health}");
-        // __CustomGlobalFunctions.DebugList(
-        //     enemy.GetComponent<Enemy>().killingRunes,
-        //     "Enemy killing runes: "
-        // );
     }
 
     public void CompareRunes()
     {
-        blockTouch.SetActive(true);
-
         bool youWin = IsRunesExact(runesClickedByUser, killingRunes);
         // ***************************************
         // ** For future updates and features
@@ -209,14 +194,10 @@ public class _GameManager : MonoBehaviour
 
         // ? And nothing else matters ♫ ♪ ♫ ...
 
-        // Debug.Log(
-        //     $"===================== DID YOU WIN? ===================== >> {youWin.ToString().ToUpper()}"
-        // );
-
         StageEnds(youWin);
     }
 
-    public void GetClickCoordinates(Vector2 pos)
+    public void SetChainLink(Vector2 pos)
     {
         chainsLocation = GameObject.Find("chainsLocation").transform;
 
@@ -342,15 +323,6 @@ public class _GameManager : MonoBehaviour
     {
         enemyTimerToDefeat = -2f;
 
-        for (int k = 0; k < runesList.Count; k++)
-        {
-            runesList[k].GetComponent<Button>().enabled = false;
-        }
-        // for (int k = 0; k < chainsLocation.childCount; k++)
-        // {
-        //     Destroy(chainsLocation.GetChild(k).gameObject);
-        // }
-
         if (!winStatus)
         {
             enemy.GetComponent<AudioSource>().clip = attack;
@@ -424,7 +396,7 @@ public class _GameManager : MonoBehaviour
             scoreText.text = $"{score}";
         }
 
-        Destroy(enemy.gameObject, 2f);
+        Destroy(enemy, 2f);
         enemy = null;
 
         for (int k = 0; k < chainsLocation.childCount; k++)

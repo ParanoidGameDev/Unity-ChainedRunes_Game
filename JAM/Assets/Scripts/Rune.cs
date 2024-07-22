@@ -61,6 +61,10 @@ public class Rune : MonoBehaviour
 
     public void OnClickOnRune()
     {
+        // ! Temp fix
+        if (Manager.runesClickedByUser.Contains(uniqueRuneIndex))
+            return;
+
         Manager.runesClickedByUser.Add(uniqueRuneIndex);
         // ^ Debug ========================
         // __CustomGlobalFunctions.DebugList(

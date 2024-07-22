@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class _GameManager : MonoBehaviour
 {
@@ -65,7 +65,7 @@ public class _GameManager : MonoBehaviour
 
     // ! Managin Runes
     public GameObject runePrefab; // This preloads from the Unity inspector
-    public Transform gameCanvas; // This preloads from the Unity inspector
+    public Transform runesZone; // This preloads from the Unity inspector
     public List<GameObject> runesList; // Rune objects generated per enemy
 
     // ! Managin audio
@@ -78,6 +78,9 @@ public class _GameManager : MonoBehaviour
     public AudioClip win2;
     public AudioClip win3;
     public AudioClip attack;
+
+    // ! Temp fix
+    public GameObject blockTouch; // This preloads from the Unity inspector
 
     void Update()
     {
@@ -117,6 +120,8 @@ public class _GameManager : MonoBehaviour
 
     public void CreateNewEnemy()
     {
+        blockTouch.SetActive(false);
+
         enemyZone.GetComponent<Animator>().Play("enemyApproaches");
 
         enemyTimerToDefeat = 6f;
@@ -145,7 +150,7 @@ public class _GameManager : MonoBehaviour
         foreach (var x in userRunesIndex)
         {
             userRunesSprites.Add(runeSprites[x]);
-            GameObject newRune = Instantiate(runePrefab, gameCanvas);
+            GameObject newRune = Instantiate(runePrefab, runesZone);
             newRune.transform.localPosition = Vector3.zero;
 
             runesList.Add(newRune);
@@ -181,6 +186,8 @@ public class _GameManager : MonoBehaviour
 
     public void CompareRunes()
     {
+        blockTouch.SetActive(true);
+
         bool youWin = IsRunesExact(runesClickedByUser, killingRunes);
         // ***************************************
         // ** For future updates and features
@@ -238,7 +245,6 @@ public class _GameManager : MonoBehaviour
 
                 linkPos.x = chainPositions[c + 1].x - chainPositions[c].x;
                 linkPos.y = chainPositions[c + 1].y - chainPositions[c].y;
-
             }
 
             if (c == 0)
@@ -249,13 +255,11 @@ public class _GameManager : MonoBehaviour
                 linkPos.x = mousePositions.x - chainPositions[c].x;
                 linkPos.y = mousePositions.y - chainPositions[c].y;
             }
-    
 
             if (c == chainsSpawned.Count - 1)
             {
-                if(chainsSpawned.Count > 1)
+                if (chainsSpawned.Count > 1)
                 {
-
                     connectionPos.x = chainPositions[c - 1].x - chainPositions[c].x;
                     connectionPos.y = chainPositions[c - 1].y - chainPositions[c].y;
 
@@ -342,10 +346,10 @@ public class _GameManager : MonoBehaviour
         {
             runesList[k].GetComponent<Button>().enabled = false;
         }
-        for (int k = 0; k < chainsLocation.childCount; k++)
-        {
-            Destroy(chainsLocation.GetChild(k).gameObject);
-        }
+        // for (int k = 0; k < chainsLocation.childCount; k++)
+        // {
+        //     Destroy(chainsLocation.GetChild(k).gameObject);
+        // }
 
         if (!winStatus)
         {
@@ -378,11 +382,9 @@ public class _GameManager : MonoBehaviour
                     player.playerHealth -= 3;
                     break;
             }
-            
+
             if (player.playerHealth < 0)
                 player.playerHealth = 0;
-
-            timerText.text = "OUCH!";
         }
         else
         {
@@ -390,7 +392,6 @@ public class _GameManager : MonoBehaviour
             player.GetComponent<AudioSource>().Play();
 
             enemyZone.GetComponent<AudioSource>().Play();
-            timerText.text = "---";
             player.transform.parent.GetComponent<Animator>().Play("playerAttack");
             enemy.GetComponent<Animator>().Play("deadCharacters");
             enemy.GetComponent<Enemy>().KillChildRunes();
@@ -422,8 +423,8 @@ public class _GameManager : MonoBehaviour
 
             scoreText.text = $"{score}";
         }
+
         Destroy(enemy.gameObject, 2f);
-        //Enemy dies
         enemy = null;
 
         for (int k = 0; k < chainsLocation.childCount; k++)

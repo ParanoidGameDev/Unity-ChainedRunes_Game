@@ -216,6 +216,8 @@ public class _GameManager : MonoBehaviour
         Quaternion linkQAngle;
         Quaternion connectionQAngle;
 
+        // TODO: Remove rotation from chain link
+
         for (int c = 0; c < chainPositions.Count; c++)
         {
             if (c < chainsSpawned.Count - 1)
@@ -244,9 +246,12 @@ public class _GameManager : MonoBehaviour
 
                     newConnection = Instantiate(chainConnectionPrefab, chainsLocation);
 
-                    Vector2 newSize = new();
-                    newSize.x = newConnection.GetComponent<SpriteRenderer>().size.x;
-                    newSize.y = Vector2.Distance(chainPositions[c - 1], chainPositions[c]);
+                    Vector2 newSize =
+                        new()
+                        {
+                            x = newConnection.GetComponent<SpriteRenderer>().size.x,
+                            y = Vector2.Distance(chainPositions[c - 1], chainPositions[c])
+                        };
 
                     newConnection.GetComponent<SpriteRenderer>().size = newSize;
 
@@ -265,16 +270,20 @@ public class _GameManager : MonoBehaviour
                             chainsLocation
                         );
 
-                        newSize = new();
-                        newSize.x = newConnection.GetComponent<SpriteRenderer>().size.x;
-                        newSize.y = Vector2.Distance(chainPositions[0], chainPositions[c]);
+                        newSize = new()
+                        {
+                            x = newConnection.GetComponent<SpriteRenderer>().size.x,
+                            y = Vector2.Distance(chainPositions[0], chainPositions[c])
+                        };
 
                         finalConnection.GetComponent<SpriteRenderer>().size = newSize;
 
-                        Vector2 fconnectionPos = new();
-
-                        fconnectionPos.x = chainPositions[c].x - chainPositions[0].x;
-                        fconnectionPos.y = chainPositions[c].y - chainPositions[0].y;
+                        Vector2 fconnectionPos =
+                            new()
+                            {
+                                x = chainPositions[c].x - chainPositions[0].x,
+                                y = chainPositions[c].y - chainPositions[0].y
+                            };
 
                         float fconnectionAngle =
                             Mathf.Atan2(fconnectionPos.y, fconnectionPos.x) * Mathf.Rad2Deg;
@@ -284,11 +293,12 @@ public class _GameManager : MonoBehaviour
                             fconnectionAngle + 90
                         );
 
-                        finalConnection.transform.position = chainsSpawned[0].transform.position;
-                        finalConnection.transform.rotation = fconnectionQAngle;
-
+                        finalConnection.transform.SetPositionAndRotation(
+                            chainsSpawned[0].transform.position,
+                            fconnectionQAngle
+                        );
                         linkAngle = Mathf.Atan2(linkPos.y, linkPos.x) * Mathf.Rad2Deg;
-                        linkQAngle = Quaternion.Euler(0, 0, linkAngle + 90);
+                        _ = Quaternion.Euler(0, 0, linkAngle + 90);
                     }
                     chainsSpawned[c].GetComponent<SpriteRenderer>().sprite = poolChainsSprites[0];
                 }
@@ -302,14 +312,11 @@ public class _GameManager : MonoBehaviour
 
         if (chainsSpawned.Count > 1)
         {
-            newConnection.transform.position = pos;
-            newConnection.transform.rotation = connectionQAngle;
+            newConnection.transform.SetPositionAndRotation(pos, connectionQAngle);
         }
 
-        newChain.transform.position = pos;
-        newChain.transform.rotation = linkQAngle;
-
-        Debug.Log("Chain created at: " + pos.ToString());
+        newChain.transform.SetPositionAndRotation(pos, linkQAngle);
+        // Debug.Log("Chain created at: " + pos.ToString());
     }
 
     private void StageEnds(bool winStatus)
@@ -321,7 +328,7 @@ public class _GameManager : MonoBehaviour
             enemyZone.GetComponent<Animator>().Play("enemyAttack");
             player.GetComponent<Animator>().Play("hurtCharacters");
 
-            Debug.Log("Player gets 1 damage");
+            // Debug.Log("Player gets 1 damage");
             player.playerHealth -= 1;
             switch (nextEnemyType)
             {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class _GameManager : MonoBehaviour
 {
@@ -45,7 +45,7 @@ public class _GameManager : MonoBehaviour
     public GameObject chainLinkPrefab; // This preloads from te Unity inspector
     public GameObject chainConnectionPrefab; // This preloads from te Unity inspector
     public Transform chainsLocation; // This preloads from te Unity hierarchy
-    public List<GameObject> chainsSpawned; // 
+    public List<GameObject> chainsSpawned; //
     public List<Sprite> poolChainsSprites; // This preloads from te Unity inspector;
     public List<Vector2> chainPositions; //This loads when player clicks on runes
 
@@ -65,8 +65,8 @@ public class _GameManager : MonoBehaviour
 
     // ! Managin Runes
     public GameObject runePrefab; // This preloads from the Unity inspector
-    public Transform gameCanvas; // This preloads from the Unity inspector
-    public List<GameObject> runesList; // Rune objects generated per enemy
+    public Transform runesZone; // This preloads from the Unity inspector
+    public List<GameObject> runesList; // Rune objects generated based on enemy health
 
     // ! Managin audio
     public AudioSource enemyZoneAudio1;
@@ -112,7 +112,6 @@ public class _GameManager : MonoBehaviour
     {
         scoreText.text = $"{score}";
         Invoke(nameof(CreateNewEnemy), 1);
-        // InvokeRepeating("CreateNewEnemy", 0f, 5f);
     }
 
     public void CreateNewEnemy()
@@ -145,7 +144,7 @@ public class _GameManager : MonoBehaviour
         foreach (var x in userRunesIndex)
         {
             userRunesSprites.Add(runeSprites[x]);
-            GameObject newRune = Instantiate(runePrefab, gameCanvas);
+            GameObject newRune = Instantiate(runePrefab, runesZone);
             newRune.transform.localPosition = Vector3.zero;
 
             runesList.Add(newRune);
@@ -170,13 +169,6 @@ public class _GameManager : MonoBehaviour
             enemyZone
         );
         killingRunes = enemy.GetComponent<Enemy>().killingRunes;
-
-        // ^ Debug ========================
-        // Debug.Log($"Required runes pressed (enemy health): {enemy.GetComponent<Enemy>().health}");
-        // __CustomGlobalFunctions.DebugList(
-        //     enemy.GetComponent<Enemy>().killingRunes,
-        //     "Enemy killing runes: "
-        // );
     }
 
     public void CompareRunes()
@@ -202,14 +194,10 @@ public class _GameManager : MonoBehaviour
 
         // ? And nothing else matters ♫ ♪ ♫ ...
 
-        // Debug.Log(
-        //     $"===================== DID YOU WIN? ===================== >> {youWin.ToString().ToUpper()}"
-        // );
-
         StageEnds(youWin);
     }
 
-    public void GetClickCoordinates(Vector2 pos)
+    public void SetChainLink(Vector2 pos)
     {
         chainsLocation = GameObject.Find("chainsLocation").transform;
 
@@ -221,7 +209,6 @@ public class _GameManager : MonoBehaviour
 
         chainsSpawned.Add(newChain);
 
-
         Vector2 linkPos = new();
         Vector2 connectionPos = new();
         float linkAngle;
@@ -229,15 +216,16 @@ public class _GameManager : MonoBehaviour
         Quaternion linkQAngle;
         Quaternion connectionQAngle;
 
-        for (int c = 0; c < chainPositions.Count; c++) {
+        // TODO: Remove rotation from chain link
 
+        for (int c = 0; c < chainPositions.Count; c++)
+        {
             if (c < chainsSpawned.Count - 1)
             {
                 chainsSpawned[c].GetComponent<SpriteRenderer>().sprite = poolChainsSprites[0];
 
                 linkPos.x = chainPositions[c + 1].x - chainPositions[c].x;
                 linkPos.y = chainPositions[c + 1].y - chainPositions[c].y;
-
             }
 
             if (c == 0)
@@ -251,55 +239,69 @@ public class _GameManager : MonoBehaviour
 
             if (c == chainsSpawned.Count - 1)
             {
-                if(chainsSpawned.Count > 1) {
-
-
-                    GetComponent<AudioSource>().Play();
-
+                if (chainsSpawned.Count > 1)
+                {
                     connectionPos.x = chainPositions[c - 1].x - chainPositions[c].x;
                     connectionPos.y = chainPositions[c - 1].y - chainPositions[c].y;
 
                     newConnection = Instantiate(chainConnectionPrefab, chainsLocation);
 
-                    Vector2 newSize = new();
-                    newSize.x = newConnection.GetComponent<SpriteRenderer>().size.x;
-                    newSize.y = Vector2.Distance(chainPositions[c - 1], chainPositions[c]);
+                    Vector2 newSize =
+                        new()
+                        {
+                            x = newConnection.GetComponent<SpriteRenderer>().size.x,
+                            y = Vector2.Distance(chainPositions[c - 1], chainPositions[c])
+                        };
 
                     newConnection.GetComponent<SpriteRenderer>().size = newSize;
 
-                    if(chainsSpawned.Count < enemy.GetComponent<Enemy>().health)
+                    if (chainsSpawned.Count < enemy.GetComponent<Enemy>().health)
                     {
                         linkPos.x = chainPositions[0].x - chainPositions[c].x;
                         linkPos.y = chainPositions[0].y - chainPositions[c].y;
-                    } else
+                    }
+                    else
                     {
                         linkPos.x = chainPositions[c - 1].x - chainPositions[c].x;
                         linkPos.y = chainPositions[c - 1].y - chainPositions[c].y;
 
+                        GameObject finalConnection = Instantiate(
+                            chainConnectionPrefab,
+                            chainsLocation
+                        );
 
-                        GameObject finalConnection = Instantiate(chainConnectionPrefab, chainsLocation);
-                        
-                        newSize = new();
-                        newSize.x = newConnection.GetComponent<SpriteRenderer>().size.x;
-                        newSize.y = Vector2.Distance(chainPositions[0], chainPositions[c]);
+                        newSize = new()
+                        {
+                            x = newConnection.GetComponent<SpriteRenderer>().size.x,
+                            y = Vector2.Distance(chainPositions[0], chainPositions[c])
+                        };
 
                         finalConnection.GetComponent<SpriteRenderer>().size = newSize;
 
-                        Vector2 fconnectionPos = new();
+                        Vector2 fconnectionPos =
+                            new()
+                            {
+                                x = chainPositions[c].x - chainPositions[0].x,
+                                y = chainPositions[c].y - chainPositions[0].y
+                            };
 
-                        fconnectionPos.x = chainPositions[c].x - chainPositions[0].x;
-                        fconnectionPos.y = chainPositions[c].y - chainPositions[0].y;
+                        float fconnectionAngle =
+                            Mathf.Atan2(fconnectionPos.y, fconnectionPos.x) * Mathf.Rad2Deg;
+                        Quaternion fconnectionQAngle = Quaternion.Euler(
+                            0,
+                            0,
+                            fconnectionAngle + 90
+                        );
 
-                        float fconnectionAngle = Mathf.Atan2(fconnectionPos.y, fconnectionPos.x) * Mathf.Rad2Deg;
-                        Quaternion fconnectionQAngle = Quaternion.Euler(0, 0, fconnectionAngle + 90);
-
-                        finalConnection.transform.position = chainsSpawned[0].transform.position;
-                        finalConnection.transform.rotation = fconnectionQAngle;
-
+                        finalConnection.transform.SetPositionAndRotation(
+                            chainsSpawned[0].transform.position,
+                            fconnectionQAngle
+                        );
+                        linkAngle = Mathf.Atan2(linkPos.y, linkPos.x) * Mathf.Rad2Deg;
+                        _ = Quaternion.Euler(0, 0, linkAngle + 90);
                     }
-                    chainsSpawned[c].GetComponent<SpriteRenderer>().sprite = poolChainsSprites[2];
+                    chainsSpawned[c].GetComponent<SpriteRenderer>().sprite = poolChainsSprites[0];
                 }
-
             }
         }
         connectionAngle = Mathf.Atan2(connectionPos.y, connectionPos.x) * Mathf.Rad2Deg;
@@ -310,28 +312,16 @@ public class _GameManager : MonoBehaviour
 
         if (chainsSpawned.Count > 1)
         {
-            newConnection.transform.position = pos;
-            newConnection.transform.rotation = connectionQAngle;
+            newConnection.transform.SetPositionAndRotation(pos, connectionQAngle);
         }
 
-        newChain.transform.position = pos;
-        newChain.transform.rotation = linkQAngle;
-
-        Debug.Log("Chain created at: " + pos.ToString());
+        newChain.transform.SetPositionAndRotation(pos, linkQAngle);
+        // Debug.Log("Chain created at: " + pos.ToString());
     }
 
     private void StageEnds(bool winStatus)
     {
         enemyTimerToDefeat = -2f;
-
-        for (int k = 0; k < runesList.Count; k++)
-        {
-            runesList[k].GetComponent<Button>().enabled = false;
-        }
-        for (int k = 0; k < chainsLocation.childCount; k++)
-        {
-            Destroy(chainsLocation.GetChild(k).gameObject);
-        }
 
         if (!winStatus)
         {
@@ -344,7 +334,7 @@ public class _GameManager : MonoBehaviour
             enemyZone.GetComponent<Animator>().Play("enemyAttack");
             player.GetComponent<Animator>().Play("hurtCharacters");
 
-            Debug.Log("Player gets 1 damage");
+            // Debug.Log("Player gets 1 damage");
             player.playerHealth -= 1;
             switch (nextEnemyType)
             {
@@ -364,13 +354,9 @@ public class _GameManager : MonoBehaviour
                     player.playerHealth -= 3;
                     break;
             }
-            
+
             if (player.playerHealth < 0)
                 player.playerHealth = 0;
-
-            // TODO: Enemy fleeing animation plays here
-            Debug.Log("Enemy flee away!");
-            timerText.text = "OUCH!";
         }
         else
         {
@@ -378,11 +364,9 @@ public class _GameManager : MonoBehaviour
             player.GetComponent<AudioSource>().Play();
 
             enemyZone.GetComponent<AudioSource>().Play();
-            timerText.text = "---";
             player.transform.parent.GetComponent<Animator>().Play("playerAttack");
             enemy.GetComponent<Animator>().Play("deadCharacters");
             enemy.GetComponent<Enemy>().KillChildRunes();
-
 
             switch (nextEnemyType)
             {
@@ -410,13 +394,15 @@ public class _GameManager : MonoBehaviour
             }
 
             scoreText.text = $"{score}";
-
-            // TODO: Enemy death animation plays here
         }
-        Destroy(enemy.gameObject, 2f);
-        //Enemy dies
+
+        Destroy(enemy, 2f);
         enemy = null;
 
+        for (int k = 0; k < chainsLocation.childCount; k++)
+        {
+            Destroy(chainsLocation.GetChild(k).gameObject, 0.5f);
+        }
 
         // Debug.Log("Cleaning runes lists");
         userRunesIndex = new();
@@ -446,7 +432,6 @@ public class _GameManager : MonoBehaviour
     {
         scoreText.transform.SetParent(null);
         DontDestroyOnLoad(scoreText.gameObject);
-
 
         SceneManager.LoadSceneAsync("GameOver");
     }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class _GameManager : MonoBehaviour
@@ -66,6 +67,17 @@ public class _GameManager : MonoBehaviour
     public GameObject runePrefab; // This preloads from the Unity inspector
     public Transform gameCanvas; // This preloads from the Unity inspector
     public List<GameObject> runesList; // Rune objects generated per enemy
+
+    // ! Managin audio
+    public AudioSource enemyZoneAudio1;
+    public AudioSource playerZoneAudio;
+    public AudioSource enemyZoneAudio2;
+    public AudioClip gameOver;
+    public AudioClip lose;
+    public AudioClip win1;
+    public AudioClip win2;
+    public AudioClip win3;
+    public AudioClip attack;
 
     void Update()
     {
@@ -226,20 +238,23 @@ public class _GameManager : MonoBehaviour
                 linkPos.x = chainPositions[c + 1].x - chainPositions[c].x;
                 linkPos.y = chainPositions[c + 1].y - chainPositions[c].y;
 
-                if (c == 0)
-                {
-                    Vector2 mousePositions = new();
-                    mousePositions = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-                    linkPos.x = mousePositions.x - chainPositions[c].x;
-                    linkPos.y = mousePositions.y - chainPositions[c].y;
-                }
             }
 
+            if (c == 0)
+            {
+                GetComponent<AudioSource>().Play();
+                Vector2 mousePositions = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                linkPos.x = mousePositions.x - chainPositions[c].x;
+                linkPos.y = mousePositions.y - chainPositions[c].y;
+            }
 
             if (c == chainsSpawned.Count - 1)
             {
                 if(chainsSpawned.Count > 1) {
+
+
+                    GetComponent<AudioSource>().Play();
 
                     connectionPos.x = chainPositions[c - 1].x - chainPositions[c].x;
                     connectionPos.y = chainPositions[c - 1].y - chainPositions[c].y;
@@ -281,9 +296,6 @@ public class _GameManager : MonoBehaviour
                         finalConnection.transform.position = chainsSpawned[0].transform.position;
                         finalConnection.transform.rotation = fconnectionQAngle;
 
-
-                        linkAngle = Mathf.Atan2(linkPos.y, linkPos.x) * Mathf.Rad2Deg;
-                        linkQAngle = Quaternion.Euler(0, 0, linkAngle + 90);
                     }
                     chainsSpawned[c].GetComponent<SpriteRenderer>().sprite = poolChainsSprites[2];
                 }
@@ -312,9 +324,23 @@ public class _GameManager : MonoBehaviour
     {
         enemyTimerToDefeat = -2f;
 
+        for (int k = 0; k < runesList.Count; k++)
+        {
+            runesList[k].GetComponent<Button>().enabled = false;
+        }
+        for (int k = 0; k < chainsLocation.childCount; k++)
+        {
+            Destroy(chainsLocation.GetChild(k).gameObject);
+        }
 
         if (!winStatus)
         {
+            enemy.GetComponent<AudioSource>().clip = attack;
+            enemy.GetComponent<AudioSource>().Play();
+
+            enemyZone.GetComponent<AudioSource>().clip = lose;
+            enemyZone.GetComponent<AudioSource>().Play();
+
             enemyZone.GetComponent<Animator>().Play("enemyAttack");
             player.GetComponent<Animator>().Play("hurtCharacters");
 
@@ -338,7 +364,7 @@ public class _GameManager : MonoBehaviour
                     player.playerHealth -= 3;
                     break;
             }
-
+            
             if (player.playerHealth < 0)
                 player.playerHealth = 0;
 
@@ -348,6 +374,10 @@ public class _GameManager : MonoBehaviour
         }
         else
         {
+            player.GetComponent<AudioSource>().clip = attack;
+            player.GetComponent<AudioSource>().Play();
+
+            enemyZone.GetComponent<AudioSource>().Play();
             timerText.text = "---";
             player.transform.parent.GetComponent<Animator>().Play("playerAttack");
             enemy.GetComponent<Animator>().Play("deadCharacters");
@@ -357,16 +387,19 @@ public class _GameManager : MonoBehaviour
             switch (nextEnemyType)
             {
                 case 0:
+                    enemyZone.GetComponent<AudioSource>().clip = win1;
                     // Cyclop gives 1 point
                     timerText.text = "Nice!";
                     score += 1;
                     break;
                 case 1:
+                    enemyZone.GetComponent<AudioSource>().clip = win2;
                     // Mage gives 2 points
                     timerText.text = "Woo!";
                     score += 2;
                     break;
                 case 2:
+                    enemyZone.GetComponent<AudioSource>().clip = win3;
                     // Boss gives 5 points
                     timerText.text = "Yeah!";
                     score += 5;
@@ -384,10 +417,6 @@ public class _GameManager : MonoBehaviour
         //Enemy dies
         enemy = null;
 
-        for(int k = 0; k < chainsLocation.childCount; k++)
-        {
-            Destroy(chainsLocation.GetChild(k).gameObject, 0.5f);
-        }
 
         // Debug.Log("Cleaning runes lists");
         userRunesIndex = new();
@@ -408,6 +437,7 @@ public class _GameManager : MonoBehaviour
             timerText.text = "GAME OVER";
             Destroy(player.gameObject, 3f);
             player.GetComponent<Animator>().Play("deadCharacters");
+            enemyZone.GetComponent<AudioSource>().clip = gameOver;
             Invoke(nameof(GameOver), 3f);
         }
     }
